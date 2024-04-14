@@ -13,16 +13,15 @@ class Move:
         self.direction = direction
 
     def sort_marbles(self, marbles, direction):
-        # Example sorting logic for a vertical move; you'll need to adjust based on direction
         delta_row, delta_col = GameBoard.DIRECTIONS[direction]
-        if delta_col == 0:  # Pure vertical move
-            return sorted(marbles, key=lambda x: x[0], reverse=delta_row < 0)
-        elif delta_row == 0:  # Pure horizontal move
-            return sorted(marbles, key=lambda x: x[1], reverse=delta_col < 0)
-        else:  # Diagonal move
-            # Sort based on a diagonal direction, this will need to be adjusted
-            # based on your game's coordinate system and move direction
-            return sorted(marbles, key=lambda x: (x[0], x[1]), reverse=delta_row < 0 or delta_col < 0)
+
+        # Adjust sorting based on direction dynamics
+        if delta_row != 0 and delta_col != 0:  # Diagonal movement
+            return sorted(marbles, key=lambda x: (x[0] * delta_row, x[1] * delta_col))
+        elif delta_row != 0:  # Vertical movement only
+            return sorted(marbles, key=lambda x: x[0] * delta_row)
+        else:  # Horizontal movement only
+            return sorted(marbles, key=lambda x: x[1] * delta_col)
 
     def get_destination(self, game_board):
         """Get the destination positions for the marbles being moved."""
@@ -63,7 +62,7 @@ class Move:
             if any(game_board.board[marble] != game_board.board[self.marbles[0]] for marble in self.marbles):
                 raise InvalidMoveError("Invalid in-line move: Not all marbles belong to the same player.")
 
-            # TODO: FIX THE LOGIC HERE
+            # Checking contiguity in is_valid method
             delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
             for i in range(len(self.marbles) - 1):
                 expected_next_marble = (self.marbles[i][0] + delta_row, self.marbles[i][1] + delta_col)
@@ -104,12 +103,21 @@ class Move:
         if not destinations:
             return False  # Invalid destinations
 
-        # TODO: SOME MARBLE WILL BECOME MISSING, THE BUG SHOULD COM FROM HERE
-        # Perform the move
-        for marble in reversed(self.marbles):
-            destination = destinations.pop(0)
-            game_board.board[destination] = game_board.board[marble]
-            game_board.board[marble] = -1  # Empty the original space
+        # We need to ensure that marbles are moved without losing any during the update.
+        # Start by moving marbles from the last to the first in the list to avoid overwriting
+        # any marble that still needs to be moved.
+
+        # Create temporary storage to hold new positions
+        new_positions = {}
+        for marble, destination in zip(self.marbles, destinations):
+            new_positions[destination] = game_board.board[marble]
+
+        # Now, apply the new positions to the board and clear the original positions
+        for marble in self.marbles:
+            game_board.board[marble] = -1  # Clear original position
+
+        for destination, value in new_positions.items():
+            game_board.board[destination] = value  # Set new position
 
         return True
 
