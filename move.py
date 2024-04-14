@@ -9,7 +9,7 @@ class InvalidMoveError(Exception):
 class Move:
     def __init__(self, marbles, direction):
         self.marbles = self.sort_marbles(marbles, direction)  # A list of tuples representing the marbles' positions to be moved
-        print(self.marbles)
+        # print(self.marbles)
         self.direction = direction
 
     def sort_marbles(self, marbles, direction):
@@ -134,7 +134,7 @@ if __name__ == '__main__':
     board.display_board()
 
     # Attempt an in-line move with two white marbles
-    move = Move(marbles=[(1, 5), (2, 4)], direction='DOWN_LEFT')
+    move = Move(marbles=[(1, 9), (2, 8), (3, 7)], direction='DOWN_LEFT')
     try:
         if move.apply(board):
             print("Move applied successfully.")
