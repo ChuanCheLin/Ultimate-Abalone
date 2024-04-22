@@ -49,16 +49,26 @@ class Move:
         if not destinations:
             raise InvalidMoveError("Invalid move: One or more marbles would be moved off the board.")
 
-        # Check for side-step move
-        is_side_step = all(
-            marble[0] - self.marbles[0][0] == marble[1] - self.marbles[0][1]
-            for marble in self.marbles
-        )
+        # TODO: FIX THE SIDE-STEP LOGIC, CONSIDERING TO SPECIFY IF IT IS SIDE-STEP IN THE BEGINNING
+        # TODO: IN THE SIDE-STEP LOGIC, ALSO NEED TO CHECK IF IT IS CONTINUOUS, BUT IN WHICH DIRECTION?
+        # Calculate vector differences for side-step verification
+        deltas = [(self.marbles[i + 1][0] - self.marbles[i][0], self.marbles[i + 1][1] - self.marbles[i][1])
+                  for i in range(len(self.marbles) - 1)]
+
+        # Check if all deltas are the same - indicating a parallel move
+        if all(d == deltas[0] for d in deltas):
+            is_side_step = True
+        else:
+            is_side_step = False
+
+        print(is_side_step)
+
         if is_side_step:
             if not all(game_board.board[dest] == -1 for dest in destinations):
                 raise InvalidMoveError("Invalid side-step: Destination positions are not all empty.")
+
+        # Check for in-line move
         else:
-            # Check for in-line move
             if any(game_board.board[marble] != game_board.board[self.marbles[0]] for marble in self.marbles):
                 raise InvalidMoveError("Invalid in-line move: Not all marbles belong to the same player.")
 
@@ -134,7 +144,7 @@ if __name__ == '__main__':
     board.display_board()
 
     # Attempt an in-line move with two white marbles
-    move = Move(marbles=[(1, 9), (2, 8), (3, 7)], direction='DOWN_LEFT')
+    move = Move(marbles=[(7, 5), (8, 6)], direction='UP_LEFT')
     try:
         if move.apply(board):
             print("Move applied successfully.")
