@@ -31,8 +31,28 @@ class GameBoard:
         ])
 
     def display_board(self):
-        # Display the current state of the board
-        print(self.board)
+        # Display the current state of the board in a hexagonal shape
+        board_representation = ""
+        # Determine the maximum number of spaces needed at the beginning of the top row
+        max_offset = len(self.board) - 1
+        for i, row in enumerate(self.board):
+            # Calculate the offset for the current row to center the hexagon
+            offset = abs(i - max_offset // 2)
+            # Add leading spaces to stagger the rows and create a hexagonal effect
+            board_representation += " " * offset
+            for cell in row:
+                if cell == -2:  # Void space
+                    continue  # Skip void spaces, they are just placeholders
+                elif cell == -1:  # Empty space
+                    board_representation += ". "  # Display dot and space
+                elif cell == 0:  # Black marble
+                    board_representation += "B "  # Display 'B' and space
+                elif cell == 1:  # White marble
+                    board_representation += "W "  # Display 'W' and space
+            board_representation += "\n"
+            # print(board_representation)
+        print(board_representation.rstrip())  # Strip the last newline for clean output
+
 
     def get_neighbors(self, row, col):
         """Get the neighboring cells of a given cell at (row, col)."""
@@ -50,10 +70,3 @@ class GameBoard:
 if __name__ == "__main__":
     game_board = GameBoard()
     game_board.display_board()
-
-    # Example to get neighbors of a cell
-    ex_row, ex_col = 5, 5
-    ex_neighbors = game_board.get_neighbors(ex_row, ex_col)
-    print("Neighbors of cell ({}, {}):".format(ex_row, ex_col))
-    for direc, (n_row, n_col) in ex_neighbors.items():
-        print(f"{direc}: ({n_row}, {n_col})")
