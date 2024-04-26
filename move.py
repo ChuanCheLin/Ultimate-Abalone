@@ -12,6 +12,8 @@ class Move:
         # print(self.marbles)
         self.direction = direction
         self.type = type
+        self.ultimate = 0
+
 
     def sort_marbles(self, marbles, direction):
         delta_row, delta_col = GameBoard.DIRECTIONS[direction]
@@ -64,14 +66,11 @@ class Move:
         #
         # print(is_side_step)
 
-        # check for side move
+
         if any(game_board.board[marble] != game_board.board[self.marbles[0]] for marble in self.marbles):
             raise InvalidMoveError("Invalid in-line move: Not all marbles belong to the same player.")
 
-
-
-
-
+        # check for side move
         if self.type=='side':
             if not all(game_board.board[dest] == -1 for dest in destinations):
                 raise InvalidMoveError("Invalid side-step: Destination positions are not all empty.")
@@ -109,38 +108,65 @@ class Move:
             player_marble_count = len(self.marbles)
             opponent_marble_count = 0
             current_position = self.marbles[-1]
+            opponent_marble_positions = []
+            empty = 0
 
             while True:
-                current_position = self.get_destination(game_board)[0]
-                if not self._is_on_board(current_position, game_board):
-                    break  # Reached the end of the board, or an empty space
+                #print(self.get_destination(game_board))
+                delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
+                current_position = (current_position[0] + delta_row, current_position[1] + delta_col)
 
+                if not self._is_on_board(current_position, game_board):
+                    if empty == 1:
+                        self.ultimate = 1
+
+                    break  # Reached the end of the board, or an empty space
+                print(current_position)
                 current_marble = game_board.board[current_position]
-                if current_marble == -1 or current_marble == -2:
-                    break  # Reached an empty space or the edge of the board
-                if current_marble != game_board.board[self.marbles[0]]:
+                print(current_marble)
+                if current_marble == -1:
+                    empty = 1  # Reached an empty space or the edge of the board
+
+
+                if current_marble != game_board.board[self.marbles[0]] and empty == 0:
                     opponent_marble_count += 1
-                    if opponent_marble_count >= player_marble_count:
-                        raise InvalidMoveError("Invalid push: Numerical superiority not met for pushing.")
-                else:
+                    opponent_marble_positions.append((current_position[0], current_position[1]))
+                    print(opponent_marble_count)
+
+                elif current_marble != game_board.board[self.marbles[0]] and current_marble != -1 and empty == 1:
+                    break
+
+                elif current_marble == game_board.board[self.marbles[0]]:
                     # Found a marble belonging to the player, so no push possible
                     if opponent_marble_count > 0:
                         raise InvalidMoveError(
                             "Invalid push: Friendly marble encountered before pushing all opponent marbles.")
                     break
 
-        return True
+
+            print(current_position, empty)
+            if opponent_marble_count >= player_marble_count :
+                raise InvalidMoveError("Invalid push: Numerical superiority not met for pushing.")
+            elif self.ultimate==1:
+                for position in opponent_marble_positions:
+                    game_board.board[position] = -1
+            elif self.ultimate==0:
+                self.marbles.extend(opponent_marble_positions)
+            #print(game_board.board[self.marbles[0]])
+
+        return True, current_position
 
 
 
     def apply(self, game_board):
         """Apply the move to the board."""
 
-        if not self.is_valid(game_board):
+        valid, current_position = self.is_valid(game_board)
+        if not valid:
             return False  # Invalid move
 
 
-
+        print(self.ultimate)
         destinations = self.get_destination(game_board)
         if not destinations:
             return False  # Invalid destinations
@@ -150,16 +176,32 @@ class Move:
         # any marble that still needs to be moved.
 
         # Create temporary storage to hold new positions
-        new_positions = {}
-        for marble, destination in zip(self.marbles, destinations):
-            new_positions[destination] = game_board.board[marble]
 
-        # Now, apply the new positions to the board and clear the original positions
-        for marble in self.marbles:
-            game_board.board[marble] = -1  # Clear original position
+        if self.ultimate:
+            new_positions = {}
+            for marble in self.marbles:
+                delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
+                current_position = (current_position[0] - delta_row, current_position[1] - delta_col)
+                new_positions[current_position] = game_board.board[marble]
 
-        for destination, value in new_positions.items():
-            game_board.board[destination] = value  # Set new position
+            # Now, apply the new positions to the board and clear the original positions
+            for marble in self.marbles:
+                game_board.board[marble] = -1  # Clear original position
+
+            for destination, value in new_positions.items():
+                game_board.board[destination] = value  # Set new position
+
+        else:
+            new_positions = {}
+            for marble, destination in zip(self.marbles, destinations):
+                new_positions[destination] = game_board.board[marble]
+
+            # Now, apply the new positions to the board and clear the original positions
+            for marble in self.marbles:
+                game_board.board[marble] = -1  # Clear original position
+
+            for destination, value in new_positions.items():
+                game_board.board[destination] = value  # Set new position
 
         return True
 
@@ -176,7 +218,7 @@ if __name__ == '__main__':
     board.display_board()
 
     # Attempt an in-line move with two white marbles
-    move = Move(marbles=[(7, 5), (8, 5)], direction='UP_LEFT', type='line')
+    move = Move(marbles=[(7, 5), (8, 5), (9,5)], direction='UP_LEFT', type='line')
     try:
         if move.apply(board):
             print("Move applied successfully.")
