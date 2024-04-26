@@ -119,7 +119,7 @@ class Move:
                 print(current_position)
 
                 if not self._is_on_board(current_position, game_board):
-                    if empty == 1:
+                    if opponent_marble_count != 0:
                         self.ultimate = 1
                         game_board.out[   game_board.board[opponent_marble_positions[0]] ] += opponent_marble_count
 
