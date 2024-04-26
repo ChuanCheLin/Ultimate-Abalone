@@ -98,12 +98,12 @@ class Move:
 
         # Check for in-line move
         else:
-            # # Checking contiguity in is_valid method
-            # delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
-            # for i in range(len(self.marbles) - 1):
-            #     expected_next_marble = (self.marbles[i][0] + delta_row, self.marbles[i][1] + delta_col)
-            #     if expected_next_marble != self.marbles[i + 1]:
-            #         raise InvalidMoveError("Invalid in-line move: Marbles are not contiguous.")
+            # Checking contiguity in is_valid method
+            delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
+            for i in range(len(self.marbles) - 1):
+                expected_next_marble = (self.marbles[i][0] + delta_row, self.marbles[i][1] + delta_col)
+                if expected_next_marble != self.marbles[i + 1]:
+                    raise InvalidMoveError("Invalid in-line move: Marbles are not contiguous.")
 
 
             player_marble_count = len(self.marbles)
