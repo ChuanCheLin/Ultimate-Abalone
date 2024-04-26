@@ -7,10 +7,11 @@ class InvalidMoveError(Exception):
 
 
 class Move:
-    def __init__(self, marbles, direction):
+    def __init__(self, marbles, direction, type):
         self.marbles = self.sort_marbles(marbles, direction)  # A list of tuples representing the marbles' positions to be moved
         # print(self.marbles)
         self.direction = direction
+        self.type = type
 
     def sort_marbles(self, marbles, direction):
         delta_row, delta_col = GameBoard.DIRECTIONS[direction]
@@ -39,8 +40,8 @@ class Move:
         if not self.marbles:
             raise InvalidMoveError("No marbles selected for the move.")
 
-        if len(self.marbles) > 3:
-            raise InvalidMoveError("Cannot move more than three marbles at a time.")
+        # if len(self.marbles) > 3:
+        #     raise InvalidMoveError("Cannot move more than three marbles at a time.")
 
         if self.direction not in GameBoard.DIRECTIONS:
             raise InvalidMoveError(f"Invalid direction: {self.direction}")
@@ -56,28 +57,54 @@ class Move:
                   for i in range(len(self.marbles) - 1)]
 
         # Check if all deltas are the same - indicating a parallel move
-        if all(d == deltas[0] for d in deltas):
-            is_side_step = True
-        else:
-            is_side_step = False
+        # if all(d == deltas[0] for d in deltas):
+        #     is_side_step = True
+        # else:
+        #     is_side_step = False
+        #
+        # print(is_side_step)
 
-        print(is_side_step)
+        # check for side move
+        if any(game_board.board[marble] != game_board.board[self.marbles[0]] for marble in self.marbles):
+            raise InvalidMoveError("Invalid in-line move: Not all marbles belong to the same player.")
 
-        if is_side_step:
+
+
+
+
+        if self.type=='side':
             if not all(game_board.board[dest] == -1 for dest in destinations):
                 raise InvalidMoveError("Invalid side-step: Destination positions are not all empty.")
+            self.marbles = sorted(self.marbles)
+            print(self.marbles)
+
+            contiguous = 0
+
+            if all(marble[0] == self.marbles[0][0] for marble in
+                   self.marbles):  # All marbles are in the same row (horizontal)
+                if all(self.marbles[i][1] + 1 == self.marbles[i + 1][1] for i in range(len(self.marbles) - 1)):
+                    contiguous = 1
+            if all(marble[1] == self.marbles[0][1] for marble in
+                   self.marbles):  # All marbles are in the same row (left leaning)
+                if all(self.marbles[i][0] + 1 == self.marbles[i + 1][0] for i in range(len(self.marbles) - 1)):
+                    contiguous = 1
+
+            if all(((self.marbles[i][0] + 1 == self.marbles[i + 1][0]) and (
+                    self.marbles[i][1] - 1 == self.marbles[i + 1][1])) for i in range(len(self.marbles) - 1)):  # All marbles are in the same row (right leaning)
+                contiguous = 1
+
+            if contiguous == 0:
+                raise InvalidMoveError("Invalid in-line move: Marbles are not contiguous.ggg")
 
         # Check for in-line move
         else:
-            if any(game_board.board[marble] != game_board.board[self.marbles[0]] for marble in self.marbles):
-                raise InvalidMoveError("Invalid in-line move: Not all marbles belong to the same player.")
+            # # Checking contiguity in is_valid method
+            # delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
+            # for i in range(len(self.marbles) - 1):
+            #     expected_next_marble = (self.marbles[i][0] + delta_row, self.marbles[i][1] + delta_col)
+            #     if expected_next_marble != self.marbles[i + 1]:
+            #         raise InvalidMoveError("Invalid in-line move: Marbles are not contiguous.")
 
-            # Checking contiguity in is_valid method
-            delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
-            for i in range(len(self.marbles) - 1):
-                expected_next_marble = (self.marbles[i][0] + delta_row, self.marbles[i][1] + delta_col)
-                if expected_next_marble != self.marbles[i + 1]:
-                    raise InvalidMoveError("Invalid in-line move: Marbles are not contiguous.")
 
             player_marble_count = len(self.marbles)
             opponent_marble_count = 0
@@ -104,10 +131,15 @@ class Move:
 
         return True
 
+
+
     def apply(self, game_board):
         """Apply the move to the board."""
+
         if not self.is_valid(game_board):
             return False  # Invalid move
+
+
 
         destinations = self.get_destination(game_board)
         if not destinations:
@@ -144,7 +176,7 @@ if __name__ == '__main__':
     board.display_board()
 
     # Attempt an in-line move with two white marbles
-    move = Move(marbles=[(7, 5), (8, 6)], direction='UP_LEFT')
+    move = Move(marbles=[(7, 5), (8, 5)], direction='UP_LEFT', type='line')
     try:
         if move.apply(board):
             print("Move applied successfully.")
