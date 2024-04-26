@@ -119,6 +119,8 @@ class Move:
                 if not self._is_on_board(current_position, game_board):
                     if empty == 1:
                         self.ultimate = 1
+                        game_board.out[   game_board.board[opponent_marble_positions[0]] ] += opponent_marble_count
+
 
                     break  # Reached the end of the board, or an empty space
                 print(current_position)
@@ -137,11 +139,14 @@ class Move:
                     break
 
                 elif current_marble == game_board.board[self.marbles[0]]:
-                    # Found a marble belonging to the player, so no push possible
-                    if opponent_marble_count > 0:
-                        raise InvalidMoveError(
-                            "Invalid push: Friendly marble encountered before pushing all opponent marbles.")
-                    break
+                    if empty==0:
+                        # Found a marble belonging to the player, so no push possible
+                        if opponent_marble_count > 0:
+                            raise InvalidMoveError(
+                                "Invalid push: Friendly marble encountered before pushing all opponent marbles.")
+                    else:
+                        break
+
 
 
             print(current_position, empty)
@@ -166,7 +171,7 @@ class Move:
             return False  # Invalid move
 
 
-        print(self.ultimate)
+        print(game_board.out)
         destinations = self.get_destination(game_board)
         if not destinations:
             return False  # Invalid destinations
