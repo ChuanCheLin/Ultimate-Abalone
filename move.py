@@ -70,11 +70,11 @@ class Move:
         if any(game_board.board[marble] != game_board.board[self.marbles[0]] for marble in self.marbles):
             raise InvalidMoveError("Invalid in-line move: Not all marbles belong to the same player.")
 
-        # check for side move
+        # check for side step
         if self.type=='side':
             if not all(game_board.board[dest] == -1 for dest in destinations):
                 raise InvalidMoveError("Invalid side-step: Destination positions are not all empty.")
-            self.marbles = sorted(self.marbles)
+            #self.marbles = sorted(self.marbles)
             print(self.marbles)
 
             contiguous = 0
@@ -94,6 +94,7 @@ class Move:
 
             if contiguous == 0:
                 raise InvalidMoveError("Invalid in-line move: Marbles are not contiguous.ggg")
+
 
         # Check for in-line move
         else:
@@ -115,6 +116,7 @@ class Move:
                 #print(self.get_destination(game_board))
                 delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
                 current_position = (current_position[0] + delta_row, current_position[1] + delta_col)
+                print(current_position)
 
                 if not self._is_on_board(current_position, game_board):
                     if empty == 1:
@@ -127,7 +129,10 @@ class Move:
                 current_marble = game_board.board[current_position]
                 print(current_marble)
                 if current_marble == -1:
-                    empty = 1  # Reached an empty space or the edge of the board
+                    if opponent_marble_count == 0:
+                        break
+                    else:
+                        empty = 1  # Reached an empty space or the edge of the board
 
 
                 if current_marble != game_board.board[self.marbles[0]] and empty == 0:
@@ -223,7 +228,7 @@ if __name__ == '__main__':
     board.display_board()
 
     # Attempt an in-line move with two white marbles
-    move = Move(marbles=[(7, 5), (8, 5), (9,5)], direction='UP_LEFT', type='line')
+    move = Move(marbles=[(7, 5), (8, 5), (9, 5)], direction='UP_LEFT', type='line')
     try:
         if move.apply(board):
             print("Move applied successfully.")
