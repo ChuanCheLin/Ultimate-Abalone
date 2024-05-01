@@ -27,6 +27,37 @@ class Move:
         else:  # Horizontal movement only
             return sorted(marbles, key=lambda x: x[1] * delta_col)
 
+
+        # if 3 >=len(marbles) >= 2 :
+        #     marbles = sorted(marbles)
+        #     contiguous = 0
+        #
+        #     if all(marble[0] == marbles[0][0] for marble in marbles) and all(marbles[i][1] + 1 == marbles[i + 1][1] for i in range(len(marbles) - 1)):
+        #         # All marbles are in the same row (horizontal)
+        #         contiguous = 1
+        #         if direction == 'LEFT' or direction == 'RIGHT':
+        #             self.inline = 1
+        #
+        #
+        #     if all(marble[1] == marbles[0][1] for marble in marbles) and all(marbles[i][0] + 1 == marbles[i + 1][0] for i in range(len(marbles) - 1)):
+        #         # All marbles are in the same row (left leaning)
+        #         contiguous = 1
+        #         if direction == 'UP_LEFT' or direction == 'DOWN_RIGHT':
+        #             self.inline = 1
+        #
+        #     if all(((marbles[i][0] + 1 == marbles[i + 1][0]) and (marbles[i][1] - 1 == marbles[i + 1][1])) for i in range(len(marbles) - 1)):  # All marbles are in the same row (right leaning)
+        #         contiguous = 1
+        #         if direction == 'UP_RIGHT' or direction == 'DOWN_LEFT':
+        #             self.inline = 1
+        #
+        #     if contiguous == 0:
+        #         raise InvalidMoveError("Invalid in-line move: Marbles are not contiguous.ggg")
+        #
+        # elif len(marbles) == 1:
+        #     self.inline = 0
+        #
+        #     return marbles
+
     def get_destination(self, game_board):
         """Get the destination positions for the marbles being moved."""
         destinations = []
@@ -72,17 +103,15 @@ class Move:
             raise InvalidMoveError("Invalid in-line move: Not all marbles belong to the same player.")
 
         self.marbles = sorted(self.marbles)
-        print(self.marbles)
+
         if 3 >=len(self.marbles) >= 2 :
 
             contiguous = 0
-
             if all(marble[0] == self.marbles[0][0] for marble in self.marbles) and all(self.marbles[i][1] + 1 == self.marbles[i + 1][1] for i in range(len(self.marbles) - 1)):
                 # All marbles are in the same row (horizontal)
                 contiguous = 1
                 if self.direction == 'LEFT' or self.direction == 'RIGHT':
                     self.inline = 1
-
 
             if all(marble[1] == self.marbles[0][1] for marble in self.marbles) and all(self.marbles[i][0] + 1 == self.marbles[i + 1][0] for i in range(len(self.marbles) - 1)):
                 # All marbles are in the same row (left leaning)
@@ -97,24 +126,15 @@ class Move:
 
             if contiguous == 0:
                 raise InvalidMoveError("Invalid in-line move: Marbles are not contiguous.ggg")
-
-
-
-
         elif len(self.marbles) == 1:
-            self.side = 1
+            self.inline = 0
 
 
-
-
-        # check for side step
-        if self.inline == 0:
-            if not all(game_board.board[dest] == -1 for dest in destinations):
-                raise InvalidMoveError("Invalid side-step: Destination positions are not all empty.")
-
+        if not all(game_board.board[dest] == -1 for dest in destinations):
+            raise InvalidMoveError("Invalid step: Destination positions are not all empty.")
 
         # Check for in-line move
-        else:
+        if self.inline == 1:
             # Checking contiguity in is_valid method
             delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
 
@@ -131,10 +151,10 @@ class Move:
             empty = 0
 
             while True:
-                #print(self.get_destination(game_board))
+
                 delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
                 current_position = (current_position[0] + delta_row, current_position[1] + delta_col)
-                print(current_position)
+
 
                 if not self._is_on_board(current_position, game_board):
                     if opponent_marble_count != 0:
@@ -143,9 +163,9 @@ class Move:
 
 
                     break  # Reached the end of the board, or an empty space
-                print(current_position)
+
                 current_marble = game_board.board[current_position]
-                print(current_marble)
+
                 if current_marble == -1:
                     if opponent_marble_count == 0:
                         break
@@ -156,7 +176,7 @@ class Move:
                 if current_marble != game_board.board[self.marbles[0]] and empty == 0:
                     opponent_marble_count += 1
                     opponent_marble_positions.append((current_position[0], current_position[1]))
-                    print(opponent_marble_count)
+
 
                 elif current_marble != game_board.board[self.marbles[0]] and current_marble != -1 and empty == 1:
                     break
@@ -172,7 +192,7 @@ class Move:
 
 
 
-            print(current_position, empty)
+
             if opponent_marble_count >= player_marble_count :
                 raise InvalidMoveError("Invalid push: Numerical superiority not met for pushing.")
             elif self.ultimate==1:
@@ -180,10 +200,10 @@ class Move:
                     game_board.board[position] = -1
             elif self.ultimate==0:
                 self.marbles.extend(opponent_marble_positions)
-            #print(game_board.board[self.marbles[0]])
+
             self.target_position = current_position
 
-        print(self.inline)
+
         return True
 
 
@@ -196,7 +216,7 @@ class Move:
             return False  # Invalid move
 
 
-        #print(game_board.out)
+
         destinations = self.get_destination(game_board)
         if not destinations:
             return False  # Invalid destinations
@@ -248,7 +268,7 @@ if __name__ == '__main__':
     board.display_board()
 
     # Attempt an in-line move with two white marbles
-    move = Move(marbles=[(7, 3), (7, 5), (7, 4)], direction='LEFT')
+    move = Move(marbles=[(1,6), (1,7)], direction='RIGHT')
     try:
         if move.apply(board):
             print("Move applied successfully.")

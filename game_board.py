@@ -29,6 +29,7 @@ class GameBoard:
             [-2,  0,  0,  0,  0,  0, -2, -2, -2, -2, -2],
             [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2]
         ])
+        self.out = [0, 0] # [Black, White] The number of abalones are push out of board.
 
     def display_board(self):
         # Display the current state of the board in a hexagonal shape

@@ -61,3 +61,9 @@ if __name__ == '__main__':
 
         board.display_board()  # Display the board after each move
         move_count += 1
+        if board.out[0] >= 6:
+            print("White win")
+            break
+        elif board.out[1] >= 6:
+            print("Black win")
+            break
