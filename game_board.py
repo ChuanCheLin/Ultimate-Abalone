@@ -31,6 +31,53 @@ class GameBoard:
         ])
         self.out = [0, 0] # [Black, White] The number of abalones are push out of board.
 
+    def is_game_over(self):
+        """
+        Check if the game is over based on the number of marbles each player has pushed out.
+
+        Returns:
+        bool: True if the game is over (if any player has pushed out a sufficient number of marbles), otherwise False.
+        """
+        # Assuming the game ends when a player pushes out 6 or more marbles
+        # This threshold can be adjusted according to your game's rules
+        winning_count = 6
+        if self.out[0] >= winning_count or self.out[1] >= winning_count:
+            return True
+        return False
+
+    def simulate_move(self, move):
+        """
+        Simulate a move on the board, and return the necessary information to undo it.
+
+        Args:
+        move (Move): The move to simulate.
+
+        Returns:
+        tuple: A tuple containing the original positions and their values, and the destination positions.
+        """
+        original_positions = {marble: self.board[marble] for marble in move.marbles}
+        move.apply(self)  # Apply the move to change the board
+        # print("Board after simulate:", self.display_board())
+        return original_positions, move.marbles  # Store original positions and their states to revert later
+
+    # def undo_move(self, original_positions, marbles):
+    #     """
+    #     Undo a move using the original positions and values.
+    #
+    #     Args:
+    #     original_positions (dict): A dictionary of positions (tuple) and their original values (int).
+    #     marbles (list): The list of marbles moved.
+    #     """
+    #     # Reset the board positions to their original state
+    #     for position, value in original_positions.items():
+    #         self.board[position] = value
+    #
+    #     # Clear the new positions where marbles were moved to
+    #     for marble in marbles:
+    #         self.board[marble] = -1  # Assuming -1 is the value for an empty space
+    #
+    #     # print("Board after undo:", self.display_board())
+
     def evaluate_board(self, player_color):
         """
         Evaluate the game board from the perspective of the given player.

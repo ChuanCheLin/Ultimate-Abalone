@@ -1,6 +1,7 @@
 import random
 from game_board import GameBoard
 from move import Move, InvalidMoveError
+import numpy as np
 
 
 class Player:
@@ -23,7 +24,7 @@ class Player:
 
         # Select a random move from the list of all valid moves
         random_move = random.choice(all_possible_moves)
-        marbles, direction = random_move
+        marbles, direction = random_move.marbles, random_move.direction
 
         try:
             move = Move(marbles, direction)
@@ -49,7 +50,7 @@ class Player:
                 try:
                     move = Move([marble], direction)
                     if move.is_valid(self.board):
-                        all_moves.append((move.marbles, move.direction))
+                        all_moves.append(move)
                 except InvalidMoveError:
                     continue  # If the move is not valid, skip it
 
@@ -62,12 +63,75 @@ class Player:
                         try:
                             move = Move(list(marble_group), direction)
                             if move.is_valid(self.board):
-                                all_moves.append((move.marbles, move.direction))
+                                all_moves.append(move)
                         except InvalidMoveError:
                             continue  # If the move is not valid, skip it
 
         return all_moves
 
+    def minimax(self, depth, alpha, beta, maximizingPlayer):
+        if depth == 0 or self.board.is_game_over():
+            return self.board.evaluate_board(self.color)
+
+        if maximizingPlayer:
+            maxEval = float('-inf')
+            for move in self.generate_all_possible_moves():
+                # Save a copy of the board
+                board_copy = np.copy(self.board.board)
+
+                # Simulate the move
+                move.apply(self.board)  # Assume move.apply() modifies the board directly
+                eval = self.minimax(depth - 1, alpha, beta, False)
+
+                # Restore the board from the copy
+                self.board.board = board_copy
+
+                maxEval = max(maxEval, eval)
+                alpha = max(alpha, eval)
+                if beta <= alpha:
+                    break
+            return maxEval
+        else:
+            minEval = float('inf')
+            opponent_color = 1 if self.color == 0 else 0
+            opponent = Player(opponent_color, self.board)
+            for move in opponent.generate_all_possible_moves():
+                # Save a copy of the board
+                board_copy = np.copy(self.board.board)
+
+                # Simulate the move
+                move.apply(self.board)  # Assume move.apply() modifies the board directly
+                eval = self.minimax(depth - 1, alpha, beta, True)
+
+                # Restore the board from the copy
+                self.board.board = board_copy
+
+                minEval = min(minEval, eval)
+                beta = min(beta, eval)
+                if beta <= alpha:
+                    break
+            return minEval
+
+    def best_move(self, depth):
+        best_score = float('-inf') if self.color == 1 else float('inf')
+        best_move = None
+        for move in self.generate_all_possible_moves():
+            # Save a copy of the board
+            board_copy = np.copy(self.board.board)
+
+            # Simulate the move
+            move.apply(self.board)  # Assume move.apply() modifies the board directly
+            score = self.minimax(depth - 1, float('-inf'), float('inf'), False)
+
+            # Restore the board from the copy
+            self.board.board = board_copy
+
+            # Update the best move and score
+            if (self.color == 1 and score > best_score) or (self.color == 0 and score < best_score):
+                best_score = score
+                best_move = move
+
+        return best_move
 
 # Example usage
 if __name__ == '__main__':

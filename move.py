@@ -211,7 +211,7 @@ class Move:
     def apply(self, game_board):
         """Apply the move to the board."""
 
-        valid= self.is_valid(game_board)
+        valid = self.is_valid(game_board)
         if not valid:
             return False  # Invalid move
 
