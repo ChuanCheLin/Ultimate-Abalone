@@ -5,43 +5,45 @@ def main_game_loop():
     # Initialize the game board
     board = GameBoard()
 
-    # Create players
-    player1 = Player(0, board)  # Assuming 0 is black
-    player2 = Player(1, board)  # Assuming 1 is white
+    # Create players and choose strategy
+    strategy_black = input("Choose strategy for Player Black ('minimax' or 'random'): ")
+    strategy_white = input("Choose strategy for Player White ('minimax' or 'random'): ")
+    player_black = Player(0, board, strategy=strategy_black)  # Black player
+    player_white = Player(1, board, strategy=strategy_white)  # White player
 
     # Decide the depth of the Minimax algorithm if using AI
     minimax_depth = 3
 
     # Game loop
-    current_player = player1
+    current_player = player_black
     while not board.is_game_over():
         print("Current board:")
         board.display_board()
 
-        # Decide if using AI or human player for the move
-        if isinstance(current_player, Player):  # If AI
-            print(f"Player {current_player.color}'s turn (AI):")
-            move = current_player.best_move(minimax_depth)
-            if move:
-                move.apply(board)
-            else:
-                print("No valid moves available. Skipping turn.")
+        # Get player name for display
+        player_name = "Player Black" if current_player.color == 0 else "Player White"
+
+        # Decide and apply move
+        print(f"{player_name}'s turn:")
+        move = current_player.choose_move(minimax_depth)
+        if move:
+            move.apply(board)
+            print(f"{player_name} played move from {move.marbles[0]} to {move.direction}")
         else:
-            # Assume human player implementation or another type of player
-            pass
+            print("No valid moves available. Skipping turn.")
 
         # Check if the game has ended
         if board.is_game_over():
             break
 
         # Switch players
-        current_player = player2 if current_player == player1 else player1
+        current_player = player_white if current_player == player_black else player_black
 
     # Determine the winner
     if board.out[0] >= 6:
-        print("Game Over! Player 0 (Black) wins!")
+        print("Game Over! Player Black wins!")
     elif board.out[1] >= 6:
-        print("Game Over! Player 1 (White) wins!")
+        print("Game Over! Player White wins!")
     else:
         print("Game Over! It's a draw!")
 

@@ -12,6 +12,20 @@ class GameBoard:
         'DOWN_RIGHT': (1, 0)
     }
 
+    WEIGHTS = np.array([
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 2, 3, 2, 1, 0],
+        [0, 0, 0, 0, 1, 2, 3, 3, 2, 1, 0],
+        [0, 0, 0, 1, 2, 3, 4, 3, 2, 1, 0],
+        [0, 0, 1, 2, 3, 4, 4, 3, 2, 1, 0],
+        [0, 1, 2, 3, 4, 5, 4, 3, 2, 1, 0],
+        [0, 1, 2, 3, 4, 4, 3, 2, 1, 0, 0],
+        [0, 1, 2, 3, 4, 3, 2, 1, 0, 0, 0],
+        [0, 1, 2, 3, 3, 2, 1, 0, 0, 0, 0],
+        [0, 1, 2, 3, 2, 1, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    ])
+
     def __init__(self):
         # Initialize the board
         # -1 stands for empty, -2 stands for void
@@ -78,9 +92,11 @@ class GameBoard:
     #
     #     # print("Board after undo:", self.display_board())
 
+    #TODO: The Heuristic Function
     def evaluate_board(self, player_color):
         """
-        Evaluate the game board from the perspective of the given player.
+        Evaluate the game board from the perspective of the given player,
+        taking positional strength into consideration.
 
         Args:
         player_color (int): The color of the player for whom to evaluate the board,
@@ -89,20 +105,20 @@ class GameBoard:
         Returns:
         int: The evaluation score, where a positive score is good for the player_color.
         """
-        count_black = 0
-        count_white = 0
+        score_black = 0
+        score_white = 0
 
-        for row in self.board:
-            for cell in row:
-                if cell == 0:  # Black marble
-                    count_black += 1
-                elif cell == 1:  # White marble
-                    count_white += 1
+        for i in range(self.board.shape[0]):
+            for j in range(self.board.shape[1]):
+                if self.board[i, j] == 0:  # Black marble
+                    score_black += GameBoard.WEIGHTS[i, j]
+                elif self.board[i, j] == 1:  # White marble
+                    score_white += GameBoard.WEIGHTS[i, j]
 
         if player_color == 0:  # If evaluating for black
-            return count_black - count_white
+            return score_black - score_white
         else:  # If evaluating for white
-            return count_white - count_black
+            return score_white - score_black
 
     def display_board(self):
         # Display the current state of the board in a hexagonal shape
