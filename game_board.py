@@ -53,7 +53,8 @@ class GameBoard:
             board_representation += "\n"
             # print(board_representation)
         print(board_representation.rstrip())  # Strip the last newline for clean output
-
+        # Display the count of abalones pushed out of the board
+        print("Abalones out of board - Black: {}, White: {}".format(self.out[0], self.out[1]))
 
     def get_neighbors(self, row, col):
         """Get the neighboring cells of a given cell at (row, col)."""

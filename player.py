@@ -15,24 +15,58 @@ class Player:
                 if self.board.board[i][j] == self.color]
 
     def random_move(self):
-        """Generate and apply a random valid move."""
+        """Generate and apply a random valid move from all possible moves."""
+        all_possible_moves = self.generate_all_possible_moves()
+        if not all_possible_moves:
+            print("No valid moves available.")
+            return False  # No valid moves to make
+
+        # Select a random move from the list of all valid moves
+        random_move = random.choice(all_possible_moves)
+        marbles, direction = random_move
+
+        try:
+            move = Move(marbles, direction)
+            if move.apply(self.board):
+                print(f"Move successful: {marbles} moved {direction}")
+                return True
+        except InvalidMoveError as e:
+            print(f"Failed to apply the move: {e}")
+            return False
+
+        return False
+
+    def generate_all_possible_moves(self):
+        """Generate all valid moves for the current player."""
+        all_moves = []
         marbles = self.find_all_marbles()
         directions = list(GameBoard.DIRECTIONS.keys())
 
-        # Try up to 100 times to find a valid move
-        for _ in range(100):
-            random_marbles = random.sample(marbles, k=min(len(marbles), random.randint(1, 3)))  # Select 1-3 marbles
-            random_direction = random.choice(directions)
+        # Check moves for single marbles and combinations of 2 or 3 marbles if possible
+        for marble in marbles:
+            for direction in directions:
+                # Check individual marble moves
+                try:
+                    move = Move([marble], direction)
+                    if move.is_valid(self.board):
+                        all_moves.append((move.marbles, move.direction))
+                except InvalidMoveError:
+                    continue  # If the move is not valid, skip it
 
-            try:
-                move = Move(random_marbles, random_direction)
-                if move.apply(self.board):
-                    print(f"Move successful: {random_marbles} moved {random_direction}")
-                    return True
-            except InvalidMoveError as e:
-                continue  # If the move was invalid, try again
-        print("Failed to make a valid move after 100 attempts.")
-        return False
+        # Check combinations of marbles (2 and 3 combinations)
+        if len(marbles) > 1:
+            from itertools import combinations
+            for num_marbles in [2, 3]:  # Consider pairs and triplets of marbles
+                for marble_group in combinations(marbles, num_marbles):
+                    for direction in directions:
+                        try:
+                            move = Move(list(marble_group), direction)
+                            if move.is_valid(self.board):
+                                all_moves.append((move.marbles, move.direction))
+                        except InvalidMoveError:
+                            continue  # If the move is not valid, skip it
+
+        return all_moves
 
 
 # Example usage
