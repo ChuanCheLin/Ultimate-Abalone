@@ -31,6 +31,32 @@ class GameBoard:
         ])
         self.out = [0, 0] # [Black, White] The number of abalones are push out of board.
 
+    def evaluate_board(self, player_color):
+        """
+        Evaluate the game board from the perspective of the given player.
+
+        Args:
+        player_color (int): The color of the player for whom to evaluate the board,
+                            where 0 represents black and 1 represents white.
+
+        Returns:
+        int: The evaluation score, where a positive score is good for the player_color.
+        """
+        count_black = 0
+        count_white = 0
+
+        for row in self.board:
+            for cell in row:
+                if cell == 0:  # Black marble
+                    count_black += 1
+                elif cell == 1:  # White marble
+                    count_white += 1
+
+        if player_color == 0:  # If evaluating for black
+            return count_black - count_white
+        else:  # If evaluating for white
+            return count_white - count_black
+
     def display_board(self):
         # Display the current state of the board in a hexagonal shape
         board_representation = ""
