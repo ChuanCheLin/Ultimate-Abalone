@@ -12,7 +12,7 @@ class Move:
         # print(self.marbles)
         self.direction = direction
         self.ultimate = 0
-        self.target_position = (0,0)
+        self.target_position = (0, 0)
         self.inline = 0
 
 
@@ -268,7 +268,7 @@ if __name__ == '__main__':
     board.display_board()
 
     # Attempt an in-line move with two white marbles
-    move = Move(marbles=[(1,6), (1,7)], direction='RIGHT')
+    move = Move(marbles=[(3,5), (3,6)], direction='DOWN_RIGHT')
     try:
         if move.apply(board):
             print("Move applied successfully.")

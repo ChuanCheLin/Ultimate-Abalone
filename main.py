@@ -12,7 +12,7 @@ def main_game_loop():
     player_white = Player(1, board, strategy=strategy_white)  # White player
 
     # Decide the depth of the Minimax algorithm if using AI
-    minimax_depth = 3
+    minimax_depth = 2
 
     # Game loop
     current_player = player_black

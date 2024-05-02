@@ -2,6 +2,7 @@ import random
 from game_board import GameBoard
 from move import Move, InvalidMoveError
 import numpy as np
+from itertools import combinations
 
 
 class Player:
@@ -39,34 +40,28 @@ class Player:
         return random_move
 
     def generate_all_possible_moves(self):
-        """Generate all valid moves for the current player."""
+        """Generate all valid moves for the current player.
+        >>> board = GameBoard()
+        >>> player_white = Player(1, board)
+        >>> moves = player_white.generate_all_possible_moves()
+        >>> print(len(moves))
+        44
+        """
         all_moves = []
         marbles = self.find_all_marbles()
-        directions = list(GameBoard.DIRECTIONS.keys())
+        directions = list(self.board.DIRECTIONS.keys())
 
-        # Check moves for single marbles and combinations of 2 or 3 marbles if possible
-        for marble in marbles:
-            for direction in directions:
-                # Check individual marble moves
-                try:
-                    move = Move([marble], direction)
-                    if move.is_valid(self.board):
-                        all_moves.append(move)
-                except InvalidMoveError:
-                    continue  # If the move is not valid, skip it
-
-        # Check combinations of marbles (2 and 3 combinations)
-        if len(marbles) > 1:
-            from itertools import combinations
-            for num_marbles in [2, 3]:  # Consider pairs and triplets of marbles
-                for marble_group in combinations(marbles, num_marbles):
-                    for direction in directions:
-                        try:
-                            move = Move(list(marble_group), direction)
-                            if move.is_valid(self.board):
-                                all_moves.append(move)
-                        except InvalidMoveError:
-                            continue  # If the move is not valid, skip it
+        # Generate all single and group moves
+        for num_marbles in range(1, 4):  # From 1 marble up to 3 marbles
+            for marble_group in combinations(marbles, num_marbles):
+                for direction in directions:
+                    move = Move(list(marble_group), direction)
+                    try:
+                        if move.is_valid(self.board):
+                            all_moves.append(move)
+                            print(move.marbles, move.direction)
+                    except InvalidMoveError:
+                        continue
 
         return all_moves
 
