@@ -32,7 +32,6 @@ Players alternate turns, moving their marbles in one of six directions. Moves ca
 | <img src="./images/Ultimate_before.png" width=100%> | <img src="./images/Ultimate_after.png" width=100%> |
 
 
-![Offensive Move](./images/Ultimate_before.png)![Offensive Move After](./images/Ultimate_after.png)
 ---
 
 ### Data Structure of Game Board
