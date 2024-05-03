@@ -1,6 +1,8 @@
 ## Ultimate Abalone with Minimax
 ### Introduction
 
+This repository presents an innovative version of the classic board game Abalone, which was first created in 1987. It begins with an overview of the conventional gameplay where two players aim to push their opponent's marbles off a hexagonal board. The enhancement, termed "Ultimate Abalone," incorporates more complex strategies by permitting players to push any number of their opponent's marbles with no more than five of their own marbles. Additionally, this version introduces aggressive tactics that allow marbles to be pushed directly off the board in a single move. The article also explores the technical dimensions, detailing the data structure of the game board and the logic behind marble movements within a programming framework, showcasing how these features contribute to a deeper strategic experience. An AI player utilizing the minimax algorithm has also been developed to enhance gameplay.
+
 ---
 ### The Typical Game of Abalone 
 Abalone is a strategic board game designed for two players. It was invented in 1987 by Michel Lalet and Laurent Lévi, and has since captivated players around the world. The game’s objective is to push six of the opponent's marbles off the edge of the hexagon-shaped board.
@@ -22,8 +24,8 @@ Players alternate turns, moving their marbles in one of six directions. Moves ca
 ---
 
 ### Ultimate Abalone - Enhanced Strategy
-* Enhanced Move Mechanics: In the Ultimate Abalone, the classic move limitations are expanded. Players can now push any number of marbles (N) with a greater number of their own (M), given N>M and M>=5, making the game more dynamic and strategic.
-* Offensive Plays: Ultimate Abalone proposes offensive strategy by permitting players to push the opponent's marbles directly off the board in a single action. This rule applies even if the opponent's marbles are not positioned adjacent to the board's edge at the start of the turn. To achieve such a bold push, there must be a direct, unobstructed line between the opponent's marbles and the board's edge. These newly introduced high-stakes plays amplify the intensity of each move, compelling players to engage with foresight and boldness as they orchestrate their path to victory.
+* Enhanced Move Mechanics: In the Ultimate Abalone, the classic move limitations are expanded. Players can now push any number of marbles (N) with a greater number of their own (M), given N>M and M<=5, making the game more dynamic and strategic.
+* Offensive Moves: Ultimate Abalone proposes offensive strategy by permitting players to push the opponent's marbles directly off the board in a single action. This rule applies even if the opponent's marbles are not positioned adjacent to the board's edge at the start of the turn. To achieve such a bold push, there must be a direct, unobstructed line between the opponent's marbles and the board's edge. These newly introduced high-stakes plays amplify the intensity of each move, compelling players to engage with foresight and boldness as they orchestrate their path to victory.
 
 ---
 
