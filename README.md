@@ -46,7 +46,19 @@ Players alternate turns, moving their marbles in one of six directions. Moves ca
             [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2]
          ])
 ```
-The code above refers to the hexagonal board. In this code, 1 represents white marbles, while 0 represents black marbles. -1 represents a blank space on the board, while -2 represents a position outside of the board.
+The code above refers to the hexagonal board below. In this code, 1 represents white marbles, while 0 represents black marbles. -1 represents a blank space on the board, while -2 represents a position outside of the board. 
+
+```
+    W W W W W 
+   W W W W W W 
+  . . W W W . . 
+ . . . . . . . . 
+. . . . . . . . . 
+ . . W . . . . . 
+  . . B B B . . 
+   B B B B B B 
+    B B B B B
+```
 
 ```
             DIRECTIONS = {
