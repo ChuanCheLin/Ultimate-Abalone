@@ -14,6 +14,7 @@ class Move:
         self.ultimate = 0
         self.target_position = (0, 0)
         self.inline = 0
+        self.opponent_marbles = []
 
 
     def sort_marbles(self, marbles, direction):
@@ -98,7 +99,7 @@ class Move:
                 raise InvalidMoveError("Invalid in-line move: Marbles are not contiguous.ggg")
 
         elif len(self.marbles) == 1:
-            self.side = 1
+            self.inline = 0
 
 
         # check for side step
@@ -175,7 +176,7 @@ class Move:
                 raise InvalidMoveError("Invalid push: Numerical superiority not met for pushing.")
             elif self.ultimate==1:
                 for position in opponent_marble_positions:
-                    game_board.board[position] = -1
+                    self.opponent_marbles.append(position)
             elif self.ultimate==0:
                 self.marbles.extend(opponent_marble_positions)
 
@@ -205,6 +206,8 @@ class Move:
 
         if self.ultimate:
             new_positions = {}
+            for position in self.opponent_marbles:
+                game_board.board[position] = -1
             for marble in self.marbles:
                 delta_row, delta_col = GameBoard.DIRECTIONS[self.direction]
                 self.target_position = (self.target_position[0] - delta_row, self.target_position[1] - delta_col)
