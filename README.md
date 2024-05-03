@@ -54,7 +54,7 @@ The code above refers to the hexagonal board below. In this code, 1 represents w
                     . . W W W . . 
                    . . . . . . . . 
                   . . . . . . . . . 
-                   . . W . . . . . 
+                   . . . . . . . . 
                     . . B B B . . 
                      B B B B B B 
                       B B B B B
