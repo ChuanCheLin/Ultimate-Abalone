@@ -90,5 +90,8 @@ The code for moving marbles checks the next few marble positions to determine if
 
 ### Slides
 [Slide link]()
+
+---
+
 ### Work Allocation
 * Spencer: Brainstorm the concept for Ultimate Abalones and focus on programming the move.py, the key functionality for executing the game.
