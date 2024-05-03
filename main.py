@@ -29,7 +29,7 @@ def main_game_loop():
         if move:
             move.apply(board)
             board.update_out_counts()
-            print(f"{player_name} played move from {move.marbles[0]} to {move.direction}")
+            print(f"{player_name} played move from {move.marbles} to {move.direction}")
         else:
             print("No valid moves available. Skipping turn.")
 
