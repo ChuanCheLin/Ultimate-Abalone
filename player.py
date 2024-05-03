@@ -6,10 +6,11 @@ from itertools import combinations
 
 
 class Player:
-    def __init__(self, color, board, strategy='minimax'):
+    def __init__(self, color, board, strategy='minimax', eval_function=None):
         self.color = color  # Player's color (0 for black, 1 for white)
         self.board = board  # Reference to the game board
         self.strategy = strategy  # Strategy can be 'minimax' or 'random'
+        self.eval_function = eval_function if eval_function else self.board.evaluate_board
 
     def choose_move(self, depth=3):
         """
@@ -67,7 +68,7 @@ class Player:
 
     def minimax(self, depth, alpha, beta, maximizingPlayer):
         if depth == 0 or self.board.is_game_over():
-            return self.board.evaluate_board(self.color)
+            return self.eval_function()
 
         if maximizingPlayer:
             maxEval = float('-inf')

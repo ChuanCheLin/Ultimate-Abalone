@@ -112,8 +112,29 @@ class GameBoard:
     #
     #     # print("Board after undo:", self.display_board())
 
-    #TODO: The Heuristic Function
-    def evaluate_board(self, player_color):
+    #TODO: The Heuristic Functions
+
+    def evaluate_board(self):
+        """
+        Evaluate the game board from the perspective of the given player.
+
+        Args:
+        player_color (int): The color of the player for whom to evaluate the board,
+                            where 0 represents black and 1 represents white.
+
+        Returns:
+        int: The evaluation score, where a positive score is good for white.
+        """
+        score = 0
+
+        # Add score for marbles pushed off the board
+        # Assuming pushing off a marble scores an additional 10 points
+        self.update_out_counts()
+        score -= self.out[1] * 10  # Score for black based on white marbles pushed out
+        score += self.out[0] * 10  # Score for white based on black marbles pushed out
+
+        return score
+    def evaluate_board_with_position(self):
         """
         Evaluate the game board from the perspective of the given player,
         taking positional strength into consideration.
@@ -123,7 +144,7 @@ class GameBoard:
                             where 0 represents black and 1 represents white.
 
         Returns:
-        int: The evaluation score, where a positive score is good for the player_color.
+        int: The evaluation score, where a positive score is good for white.
         """
         score = 0
 
