@@ -1,7 +1,7 @@
-# Ultimate Abalone with Minimax
-## Introduction
+## Ultimate Abalone with Minimax
+### Introduction
 
-## The Game of Abalone
+### The Game of Abalone
 [Wikipedia](https://en.wikipedia.org/wiki/Abalone_(board_game))
 Abalone is a strategic board game designed for two players. It was invented in 1987 by Michel Lalet and Laurent Lévi, and has since captivated players around the world. The game’s objective is to push six of the opponent's marbles off the edge of the hexagon-shaped board.
 #### Board and Setup
