@@ -34,19 +34,19 @@ Players alternate turns, moving their marbles in one of six directions. Moves ca
 ```
             self.board = np.array([
             [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2],
-            [-2, -2, -2, -2, -2,  1,  1,  1,  1,  1, -2],
-            [-2, -2, -2, -2,  1,  1,  1,  1,  1,  1, -2],
-            [-2, -2, -2, -1, -1,  1,  1,  1, -1, -1, -2],
-            [-2, -2, -1, -1, -1, -1, -1, -1, -1, -1, -2],
-            [-2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -2],
-            [-2, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2],
-            [-2, -1, -1,  0,  0,  0, -1, -1, -2, -2, -2],
-            [-2,  0,  0,  0,  0,  0,  0, -2, -2, -2, -2],
-            [-2,  0,  0,  0,  0,  0, -2, -2, -2, -2, -2],
+            [-2, -2, -2, -2, -2,  1,  1,  1,  1,  1, -2],                      W W W W W 
+            [-2, -2, -2, -2,  1,  1,  1,  1,  1,  1, -2],                     W W W W W W 
+            [-2, -2, -2, -1, -1,  1,  1,  1, -1, -1, -2],                    . . W W W . . 
+            [-2, -2, -1, -1, -1, -1, -1, -1, -1, -1, -2],                   . . . . . . . . 
+            [-2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -2],                  . . . . . . . . . 
+            [-2, -1, -1, -1, -1, -1, -1, -1, -1, -2, -2],                   . . W . . . . . 
+            [-2, -1, -1,  0,  0,  0, -1, -1, -2, -2, -2],                    . . B B B . . 
+            [-2,  0,  0,  0,  0,  0,  0, -2, -2, -2, -2],                     B B B B B B 
+            [-2,  0,  0,  0,  0,  0, -2, -2, -2, -2, -2],                      B B B B B
             [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2]
          ])
 ```
-The code above refers to the hexagonal board below. In this code, 1 represents white marbles, while 0 represents black marbles. -1 represents a blank space on the board, while -2 represents a position outside of the board. 
+The code above refers to the hexagonal board at the right. In this code, 1 represents white marbles, while 0 represents black marbles. -1 represents a blank space on the board, while -2 represents a position outside of the board. 
 
 ```
                       W W W W W 
