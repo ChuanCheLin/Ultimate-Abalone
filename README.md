@@ -1,7 +1,7 @@
-# Ultimate Abalone with Minimax
-## Introduction
+## Ultimate Abalone with Minimax
+### Introduction
 
-## The Typical Game of Abalone 
+### The Typical Game of Abalone 
 Abalone is a strategic board game designed for two players. It was invented in 1987 by Michel Lalet and Laurent Lévi, and has since captivated players around the world. The game’s objective is to push six of the opponent's marbles off the edge of the hexagon-shaped board.
 #### Board and Setup
 The board consists of 61 circular spaces where marbles can reside. Each player starts with 14 marbles positioned on opposite sides of the board.
@@ -12,7 +12,7 @@ Players alternate turns, moving their marbles in one of six directions. Moves ca
 #### Reference
 [Wikipedia](https://en.wikipedia.org/wiki/Abalone_(board_game))
 
-## Ultimate Abalone - Enhanced Strategy
+### Ultimate Abalone - Enhanced Strategy
 
 
 
