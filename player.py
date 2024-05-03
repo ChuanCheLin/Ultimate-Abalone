@@ -74,16 +74,15 @@ class Player:
             for move in self.generate_all_possible_moves():
                 # Save a copy of the board
                 board_copy = np.copy(self.board.board)
-                board_out_copy = self.board.out
 
                 # Simulate the move
-                move.apply(self.board)  # Assume move.apply() modifies the board directly
+                move.apply(self.board)
                 self.board.update_out_counts()
                 eval = self.minimax(depth - 1, alpha, beta, False)
 
                 # Restore the board from the copy
                 self.board.board = board_copy
-                self.board.out = board_out_copy
+                self.board.update_out_counts()
 
                 maxEval = max(maxEval, eval)
                 alpha = max(alpha, eval)
@@ -97,16 +96,15 @@ class Player:
             for move in opponent.generate_all_possible_moves():
                 # Save a copy of the board
                 board_copy = np.copy(self.board.board)
-                board_out_copy = self.board.out
 
                 # Simulate the move
-                move.apply(self.board)  # Assume move.apply() modifies the board directly
+                move.apply(self.board)
                 self.board.update_out_counts()
                 eval = self.minimax(depth - 1, alpha, beta, True)
 
                 # Restore the board from the copy
                 self.board.board = board_copy
-                self.board.out = board_out_copy
+                self.board.update_out_counts()
 
                 minEval = min(minEval, eval)
                 beta = min(beta, eval)
@@ -116,24 +114,28 @@ class Player:
 
     def best_move(self, depth):
         best_score = float('-inf') if self.color == 1 else float('inf')
-        best_move = None
+        best_moves = None
         for move in self.generate_all_possible_moves():
             # Save a copy of the board
             board_copy = np.copy(self.board.board)
-            board_out_copy = self.board.out
 
             # Simulate the move
-            move.apply(self.board)  # Assume move.apply() modifies the board directly
+            move.apply(self.board)
             self.board.update_out_counts()
             score = self.minimax(depth - 1, float('-inf'), float('inf'), False)
 
             # Restore the board from the copy
             self.board.board = board_copy
-            self.board.out = board_out_copy
+            self.board.update_out_counts()
 
             # Update the best move and score
+            # Check if a new best score is found, reset the list
             if (self.color == 1 and score > best_score) or (self.color == 0 and score < best_score):
                 best_score = score
-                best_move = move
+                best_moves = [move]
+            elif score == best_score:
+                best_moves.append(move)
 
-        return best_move
+        print(best_score)
+        # Randomly select a move if there are multiple best moves
+        return random.choice(best_moves) if best_moves else None

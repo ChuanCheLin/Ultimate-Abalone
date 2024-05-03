@@ -79,20 +79,20 @@ class GameBoard:
             return True
         return False
 
-    def simulate_move(self, move):
-        """
-        Simulate a move on the board, and return the necessary information to undo it.
-
-        Args:
-        move (Move): The move to simulate.
-
-        Returns:
-        tuple: A tuple containing the original positions and their values, and the destination positions.
-        """
-        original_positions = {marble: self.board[marble] for marble in move.marbles}
-        move.apply(self)  # Apply the move to change the board
-        # print("Board after simulate:", self.display_board())
-        return original_positions, move.marbles  # Store original positions and their states to revert later
+    # def simulate_move(self, move):
+    #     """
+    #     Simulate a move on the board, and return the necessary information to undo it.
+    #
+    #     Args:
+    #     move (Move): The move to simulate.
+    #
+    #     Returns:
+    #     tuple: A tuple containing the original positions and their values, and the destination positions.
+    #     """
+    #     original_positions = {marble: self.board[marble] for marble in move.marbles}
+    #     move.apply(self)  # Apply the move to change the board
+    #     # print("Board after simulate:", self.display_board())
+    #     return original_positions, move.marbles  # Store original positions and their states to revert later
 
     # def undo_move(self, original_positions, marbles):
     #     """
@@ -125,26 +125,23 @@ class GameBoard:
         Returns:
         int: The evaluation score, where a positive score is good for the player_color.
         """
-        score_black = 0
-        score_white = 0
+        score = 0
 
-        # Evaluate positional strength and marbles on the board
-        for i in range(self.board.shape[0]):
-            for j in range(self.board.shape[1]):
-                if self.board[i][j] == 0:  # Black marble
-                    score_black += self.WEIGHTS[i][j]
-                elif self.board[i][j] == 1:  # White marble
-                    score_white += self.WEIGHTS[i][j]
+        # # Evaluate positional strength and marbles on the board
+        # for i in range(self.board.shape[0]):
+        #     for j in range(self.board.shape[1]):
+        #         if self.board[i][j] == 0:  # Black marble
+        #             score_black += self.WEIGHTS[i][j]
+        #         elif self.board[i][j] == 1:  # White marble
+        #             score_white += self.WEIGHTS[i][j]
 
         # Add score for marbles pushed off the board
         # Assuming pushing off a marble scores an additional 10 points
-        score_black += self.out[1] * 100  # Score for black based on white marbles pushed out
-        score_white += self.out[0] * 100  # Score for white based on black marbles pushed out
+        self.update_out_counts()
+        score -= self.out[1] * 10  # Score for black based on white marbles pushed out
+        score += self.out[0] * 10  # Score for white based on black marbles pushed out
 
-        if player_color == 0:  # If evaluating for black
-            return score_black - score_white
-        else:  # If evaluating for white
-            return score_white - score_black
+        return score
 
     def display_board(self):
         # Display the current state of the board in a hexagonal shape
