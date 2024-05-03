@@ -17,6 +17,8 @@ Players alternate turns, moving their marbles in one of six directions. Moves ca
 [Wikipedia](https://en.wikipedia.org/wiki/Abalone_(board_game))
 ---
 ### Ultimate Abalone - Enhanced Strategy
+* Enhanced Move Mechanics: In the Ultimate Abalone, the classic move limitations are expanded. Players can now push any number of marbles (N) with a greater number of their own (M), given N>M and M>=5, making the game more dynamic and strategic.
+* Offensive Plays: Ultimate Abalone proposes offensive strategy by permitting players to push the opponent's marbles directly off the board in a single action. This rule applies even if the opponent's marbles are not positioned adjacent to the board's edge at the start of the turn. To achieve such a bold push, there must be a direct, unobstructed line between the opponent's marbles and the board's edge. These newly introduced high-stakes plays amplify the intensity of each move, compelling players to engage with foresight and boldness as they orchestrate their path to victory.
 
 
 
