@@ -1,3 +1,22 @@
+# Ultimate Abalone with Minimax
+## Introduction
+
+## The Typical Game of Abalone [Wikipedia](https://en.wikipedia.org/wiki/Abalone_(board_game))
+Abalone is a strategic board game designed for two players. It was invented in 1987 by Michel Lalet and Laurent Lévi, and has since captivated players around the world. The game’s objective is to push six of the opponent's marbles off the edge of the hexagon-shaped board.
+#### Board and Setup
+The board consists of 61 circular spaces where marbles can reside. Each player starts with 14 marbles positioned on opposite sides of the board.
+#### Moves
+Players alternate turns, moving their marbles in one of six directions. Moves can be made in-line (pushing) or broadside (side-stepping).
+- In-line Move: Marbles are moved as a column into a free space
+- Side Step: Marbles are moved sideways into adjacent free spaces
+
+
+
+
+
+
+
+
 ## 2024 Spring Finals
 
 Each project from this semester is a public fork linked from this repository.  This is just one of the many assignments students worked on for the course, but this is the *only* one they are permitted to publish openly.
