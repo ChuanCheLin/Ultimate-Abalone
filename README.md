@@ -30,6 +30,7 @@ Players alternate turns, moving their marbles in one of six directions. Moves ca
 ### Data Structure of Game Board
 
 ```
+            self.board = np.array([
             [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2],
             [-2, -2, -2, -2, -2,  1,  1,  1,  1,  1, -2],
             [-2, -2, -2, -2,  1,  1,  1,  1,  1,  1, -2],
@@ -41,6 +42,7 @@ Players alternate turns, moving their marbles in one of six directions. Moves ca
             [-2,  0,  0,  0,  0,  0,  0, -2, -2, -2, -2],
             [-2,  0,  0,  0,  0,  0, -2, -2, -2, -2, -2],
             [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2]
+            ])
 ```
 
 
