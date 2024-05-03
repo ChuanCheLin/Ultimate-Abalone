@@ -45,6 +45,26 @@ class GameBoard:
         ])
         self.out = [0, 0] # [Black, White] The number of abalones are push out of board.
 
+    def update_out_counts(self):
+        """Updates the count of marbles pushed out of the board by checking the current board state."""
+        # Initialize counts for black and white marbles
+        count_black = 0
+        count_white = 0
+
+        # Counting the marbles based on the typical board values for black (0) and white (1)
+        for row in self.board:
+            for cell in row:
+                if cell == 0:
+                    count_black += 1
+                elif cell == 1:
+                    count_white += 1
+
+        # Update the out counts based on the total marbles minus the ones on the board
+        # Assuming the total starting marbles per player were initially known, adjust accordingly
+        total_marbles_per_player = 14  # Change this based on your game's initial settings
+        self.out[0] = total_marbles_per_player - count_black  # Black marbles pushed out
+        self.out[1] = total_marbles_per_player - count_white
+
     def is_game_over(self):
         """
         Check if the game is over based on the number of marbles each player has pushed out.
@@ -108,13 +128,13 @@ class GameBoard:
         score_black = 0
         score_white = 0
 
-        # # Evaluate positional strength and marbles on the board
-        # for i in range(self.board.shape[0]):
-        #     for j in range(self.board.shape[1]):
-        #         if self.board[i][j] == 0:  # Black marble
-        #             score_black += self.WEIGHTS[i][j]
-        #         elif self.board[i][j] == 1:  # White marble
-        #             score_white += self.WEIGHTS[i][j]
+        # Evaluate positional strength and marbles on the board
+        for i in range(self.board.shape[0]):
+            for j in range(self.board.shape[1]):
+                if self.board[i][j] == 0:  # Black marble
+                    score_black += self.WEIGHTS[i][j]
+                elif self.board[i][j] == 1:  # White marble
+                    score_white += self.WEIGHTS[i][j]
 
         # Add score for marbles pushed off the board
         # Assuming pushing off a marble scores an additional 10 points

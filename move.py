@@ -12,7 +12,7 @@ class Move:
         # print(self.marbles)
         self.direction = direction
         self.ultimate = 0
-        self.target_position = (0,0)
+        self.target_position = (0, 0)
         self.inline = 0
 
 
@@ -67,7 +67,6 @@ class Move:
         #
         # print(is_side_step)
 
-
         if any(game_board.board[marble] != game_board.board[self.marbles[0]] for marble in self.marbles):
             raise InvalidMoveError("Invalid in-line move: Not all marbles belong to the same player.")
 
@@ -98,13 +97,8 @@ class Move:
             if contiguous == 0:
                 raise InvalidMoveError("Invalid in-line move: Marbles are not contiguous.ggg")
 
-
-
-
         elif len(self.marbles) == 1:
             self.side = 1
-
-
 
 
         # check for side step
@@ -148,8 +142,6 @@ class Move:
                 if not self._is_on_board(current_position, game_board):
                     if opponent_marble_count != 0:
                         self.ultimate = 1
-                        game_board.out[   game_board.board[opponent_marble_positions[0]] ] += opponent_marble_count
-
 
                     break  # Reached the end of the board, or an empty space
 
@@ -179,9 +171,6 @@ class Move:
                     else:
                         break
 
-
-
-
             if opponent_marble_count >= player_marble_count :
                 raise InvalidMoveError("Invalid push: Numerical superiority not met for pushing.")
             elif self.ultimate==1:
@@ -200,11 +189,9 @@ class Move:
     def apply(self, game_board):
         """Apply the move to the board."""
 
-        valid= self.is_valid(game_board)
-        if not valid:
-            return False  # Invalid move
-
-
+        # valid = self.is_valid(game_board)
+        # if not valid:
+        #     return False  # Invalid move
 
         destinations = self.get_destination(game_board)
         if not destinations:

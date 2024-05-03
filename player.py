@@ -74,13 +74,16 @@ class Player:
             for move in self.generate_all_possible_moves():
                 # Save a copy of the board
                 board_copy = np.copy(self.board.board)
+                board_out_copy = self.board.out
 
                 # Simulate the move
                 move.apply(self.board)  # Assume move.apply() modifies the board directly
+                self.board.update_out_counts()
                 eval = self.minimax(depth - 1, alpha, beta, False)
 
                 # Restore the board from the copy
                 self.board.board = board_copy
+                self.board.out = board_out_copy
 
                 maxEval = max(maxEval, eval)
                 alpha = max(alpha, eval)
@@ -94,13 +97,16 @@ class Player:
             for move in opponent.generate_all_possible_moves():
                 # Save a copy of the board
                 board_copy = np.copy(self.board.board)
+                board_out_copy = self.board.out
 
                 # Simulate the move
                 move.apply(self.board)  # Assume move.apply() modifies the board directly
+                self.board.update_out_counts()
                 eval = self.minimax(depth - 1, alpha, beta, True)
 
                 # Restore the board from the copy
                 self.board.board = board_copy
+                self.board.out = board_out_copy
 
                 minEval = min(minEval, eval)
                 beta = min(beta, eval)
@@ -114,13 +120,16 @@ class Player:
         for move in self.generate_all_possible_moves():
             # Save a copy of the board
             board_copy = np.copy(self.board.board)
+            board_out_copy = self.board.out
 
             # Simulate the move
             move.apply(self.board)  # Assume move.apply() modifies the board directly
+            self.board.update_out_counts()
             score = self.minimax(depth - 1, float('-inf'), float('inf'), False)
 
             # Restore the board from the copy
             self.board.board = board_copy
+            self.board.out = board_out_copy
 
             # Update the best move and score
             if (self.color == 1 and score > best_score) or (self.color == 0 and score < best_score):

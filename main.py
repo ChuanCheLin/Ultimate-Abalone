@@ -28,6 +28,7 @@ def main_game_loop():
         move = current_player.choose_move(minimax_depth)
         if move:
             move.apply(board)
+            board.update_out_counts()
             print(f"{player_name} played move from {move.marbles[0]} to {move.direction}")
         else:
             print("No valid moves available. Skipping turn.")
