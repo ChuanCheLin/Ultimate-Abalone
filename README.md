@@ -49,16 +49,18 @@ Players alternate turns, moving their marbles in one of six directions. Moves ca
 The code above refers to the hexagonal board below. In this code, 1 represents white marbles, while 0 represents black marbles. -1 represents a blank space on the board, while -2 represents a position outside of the board. 
 
 ```
-    W W W W W 
-   W W W W W W 
-  . . W W W . . 
- . . . . . . . . 
-. . . . . . . . . 
- . . W . . . . . 
-  . . B B B . . 
-   B B B B B B 
-    B B B B B
+                      W W W W W 
+                     W W W W W W 
+                    . . W W W . . 
+                   . . . . . . . . 
+                  . . . . . . . . . 
+                   . . W . . . . . 
+                    . . B B B . . 
+                     B B B B B B 
+                      B B B B B
 ```
+
+The code below illustrates the correspondence between directions on a hexagonal board and their equivalents in a 2D array. The keys of the dictionary represent the directions on the hexagonal board, while the values indicate the corresponding directions in the 2D array.
 
 ```
             DIRECTIONS = {
@@ -70,7 +72,7 @@ The code above refers to the hexagonal board below. In this code, 1 represents w
                     'DOWN_RIGHT': (1, 0)
                 }
 ```
-The provided code illustrates the correspondence between directions on a hexagonal board and their equivalents in a 2D array. The keys of the dictionary represent the directions on the hexagonal board, while the values indicate the corresponding directions in the 2D array.
+
 
 ---
 
