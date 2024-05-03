@@ -65,7 +65,8 @@ The provided code illustrates the correspondence between directions on a hexagon
 #### Move 
 The code for moving marbles checks the next few marble positions to determine if they are empty or occupied by opponents' marbles. If there are fewer opponent marbles, it then evaluates the likelihood of offensive play success by examining subsequent positions. The computation is completed in constant time, denoted as O(1), Θ(1), and Ω(1).
 
-
+### Work Allocation
+* Spencer: Brainstorm the concept for Ultimate Abalones and focus on programming the move.py, the key functionality for executing the game.
 
 
 
