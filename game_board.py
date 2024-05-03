@@ -127,13 +127,13 @@ class GameBoard:
         """
         score = 0
 
-        # # Evaluate positional strength and marbles on the board
-        # for i in range(self.board.shape[0]):
-        #     for j in range(self.board.shape[1]):
-        #         if self.board[i][j] == 0:  # Black marble
-        #             score_black += self.WEIGHTS[i][j]
-        #         elif self.board[i][j] == 1:  # White marble
-        #             score_white += self.WEIGHTS[i][j]
+        # Evaluate positional strength and marbles on the board
+        for i in range(self.board.shape[0]):
+            for j in range(self.board.shape[1]):
+                if self.board[i][j] == 0:  # Black marble
+                    score -= self.WEIGHTS[i][j]
+                elif self.board[i][j] == 1:  # White marble
+                    score += self.WEIGHTS[i][j]
 
         # Add score for marbles pushed off the board
         # Assuming pushing off a marble scores an additional 10 points

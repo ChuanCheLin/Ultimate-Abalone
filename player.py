@@ -136,6 +136,6 @@ class Player:
             elif score == best_score:
                 best_moves.append(move)
 
-        print(best_score)
+        # print(best_score)
         # Randomly select a move if there are multiple best moves
         return random.choice(best_moves) if best_moves else None
