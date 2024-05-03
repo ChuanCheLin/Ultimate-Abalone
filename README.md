@@ -42,10 +42,16 @@ Players alternate turns, moving their marbles in one of six directions. Moves ca
             [-2,  0,  0,  0,  0,  0,  0, -2, -2, -2, -2],
             [-2,  0,  0,  0,  0,  0, -2, -2, -2, -2, -2],
             [-2, -2, -2, -2, -2, -2, -2, -2, -2, -2, -2]
-            ])
+         ])
 ```
+The code above refers to the hexagonal board. In this code, 1 represents white marbles, while 0 represents black marbles. -1 represents a blank space on the board, while -2 represents a position outside of the board.
 
+---
 
+### Code Analysis
+
+* Move 
+The code for moving marbles checks the next few marble positions to determine if they are empty or occupied by opponents' marbles. If there are fewer opponent marbles, it then evaluates the likelihood of offensive play success by examining subsequent positions. The computation is completed in constant time, denoted as O(1), Θ(1), and Ω(1).
 
 
 
