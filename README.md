@@ -8,11 +8,11 @@ Abalone is a strategic board game designed for two players. It was invented in 1
 The board consists of 61 circular spaces where marbles can reside. Each player starts with 14 marbles positioned on opposite sides of the board.
 #### Moves
 Players alternate turns, moving their marbles in one of six directions. Moves can be made in-line (pushing) or broadside (side-stepping).
-- In-line Move: Marbles are moved as a column into a free space
-* 3 push 1
-* 3 push 2
-* 2 push 1
-- Side Step: Marbles are moved sideways into adjacent free spaces
+* In-line Move: Marbles are moved as a column into a free space
+  * 3 push 1
+  * 3 push 2
+  * 2 push 1
+* Side Step: Marbles are moved sideways into adjacent free spaces
 #### Reference
 [Wikipedia](https://en.wikipedia.org/wiki/Abalone_(board_game))
 ---
