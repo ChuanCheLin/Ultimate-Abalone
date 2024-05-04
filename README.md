@@ -179,7 +179,7 @@ The code for moving marbles checks the next few marble positions to determine if
 ---
 
 ### Slides
-[Slide link]()
+[Slide link](https://docs.google.com/presentation/d/19IYfz214aRvO0UrB91qhWTowrc4p3IzNOsOfPiCw4Ew/edit?usp=sharing)
 
 ---
 
