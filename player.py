@@ -10,7 +10,7 @@ class Player:
         self.color = color  # Player's color (0 for black, 1 for white)
         self.board = board  # Reference to the game board
         self.strategy = strategy  # Strategy can be 'minimax' or 'random'
-        self.eval_function = eval_function if eval_function else self.board.evaluate_board
+        self.eval_function = eval_function if eval_function else self.board.evaluate_board_with_position
 
     def choose_move(self, depth=3):
         """
@@ -53,7 +53,7 @@ class Player:
         directions = list(self.board.DIRECTIONS.keys())
 
         # Generate all single and group moves
-        for num_marbles in range(1, 4):  # From 1 marble up to 3 marbles
+        for num_marbles in range(1, 6):  # From 1 marble up to 5 marbles
             for marble_group in combinations(marbles, num_marbles):
                 for direction in directions:
                     move = Move(list(marble_group), direction)
