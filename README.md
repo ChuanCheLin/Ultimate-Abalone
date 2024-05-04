@@ -77,6 +77,9 @@ The code below illustrates the correspondence between directions on a hexagonal 
                     'DOWN_RIGHT': (1, 0)
                 }
 ```
+
+---
+
 ### AI Player Development Using Minimax Algorithm
 
 #### Overview of Minimax
@@ -96,6 +99,45 @@ In Ultimate Abalone, the Minimax algorithm has been tailored to handle the enhan
 - Alpha-beta pruning is integrated into the algorithm to reduce the number of nodes evaluated, enhancing the decision-making speed without sacrificing accuracy. This technique skips evaluating branches in the Minimax tree that won't affect the final decision.
 
 ---
+
+### Project Structure
+
+This project consists of several Python files, each serving a specific function in the implementation of the Ultimate Abalone game. Below, you will find an overview of each component.
+
+#### Components Overview
+
+1. **game_board.py**
+   - **Purpose**: Defines the `GameBoard` class, which handles the game's board setup, game state management (like updating counts of marbles pushed out), and utility functions for game mechanics.
+   - **Key Features**:
+     - Board initialization and configuration.
+     - Functions to evaluate board states for AI decision-making.
+     - Utilities for checking game completion and updating marble counts.
+
+2. **player.py**
+   - **Purpose**: Implements the `Player` class responsible for managing the player's actions, including decision-making via Minimax algorithm and random moves.
+   - **Key Features**:
+     - Functions to determine and execute moves based on the strategy (Minimax or random).
+     - Heuristic evaluation integration for AI strategy enhancement.
+
+3. **move.py**
+   - **Purpose**: Contains the `Move` class that defines the logic to validate and execute moves on the game board.
+   - **Key Features**:
+     - Move validation and execution based on game rules.
+     - Handling of in-line and side-step moves according to the game's strategy.
+
+4. **gameplay.py**
+   - **Purpose**: Serves as the main script to run simulations using basic player strategies without heuristic variations.
+   - **Key Features**:
+     - Game loop to manage turn-taking and determine game outcomes.
+     - Interaction with the `GameBoard` and `Player` classes to simulate the game.
+
+5. **gameplay_different_heuristic.py**
+   - **Purpose**: An extension of the gameplay to allow comparison between different heuristic functions.
+   - **Key Features**:
+     - Enables users to select different heuristic strategies for the AI players, facilitating comparisons of AI performance.
+
+---
+
 
 ### Code Analysis
 
