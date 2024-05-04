@@ -164,6 +164,18 @@ In testing different AI strategies for Ultimate Abalone, we conducted simulation
 #### Move (move.py)
 The code for moving marbles checks the next few marble positions to determine if they are empty or occupied by opponents' marbles. If there are fewer opponent marbles, it then evaluates the likelihood of offensive play success by examining subsequent positions. The computation is completed in constant time, denoted as O(1), Θ(1), and Ω(1).
 
+#### Big-O Complexity of AI Strategies
+
+1. **Minimax Algorithm**:
+   - The Big-O complexity of the Minimax algorithm is `O(b^d)`, where `b` is the branching factor (the average number of moves possible at any point in the game), and `d` is the depth of the tree (how many moves ahead the algorithm evaluates). The complexity arises from the algorithm evaluating all possible moves to a given depth.
+
+2. **Alpha-Beta Pruning**:
+   - While Alpha-Beta pruning does not change the worst-case complexity of `O(b^d)`, it significantly improves the average case, often reducing the effective branching factor. The exact improvement depends on the move ordering and the game dynamics but generally allows the algorithm to skip evaluation of many branches that cannot influence the final decision.
+
+3. **Evaluation Functions**:
+   - **Simple Evaluation**: Evaluating the board based solely on the count of opponent marbles pushed off operates in `O(n)`, where `n` is the number of marbles on the board. This function iterates through each board position once.
+   - **Positional Evaluation**: Including positional strengths, this function also operates in `O(n)`. It scans the board a single time, assessing the positional value of each marble based on predefined weights.
+
 ---
 
 ### Slides
@@ -173,3 +185,4 @@ The code for moving marbles checks the next few marble positions to determine if
 
 ### Work Allocation
 * Spencer: Brainstorm the concept for Ultimate Abalones and focus on programming the move.py, the key functionality for executing the game.
+* Chuan-Che Lin: Designed the overall structure of the game, including the early setup of all data structures which form the backbone of the game's functionality. Additionally, Chuan-Che was responsible for implementing the Minimax algorithm, ensuring the AI's decision-making process is both efficient and effective, capable of handling complex game situations.
