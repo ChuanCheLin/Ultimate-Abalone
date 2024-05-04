@@ -77,7 +77,23 @@ The code below illustrates the correspondence between directions on a hexagonal 
                     'DOWN_RIGHT': (1, 0)
                 }
 ```
+### AI Player Development Using Minimax Algorithm
 
+#### Overview of Minimax
+The Minimax algorithm is a decision-making AI model used widely in two-player games. This algorithm plays a crucial role in the development of the AI player for Ultimate Abalone, enabling it to consider both its moves and the potential responses of the opponent. Minimax helps in evaluating the best move from the current game state by minimizing the possible loss for a worst-case scenario maximum loss.
+
+#### Implementation in Ultimate Abalone
+In Ultimate Abalone, the Minimax algorithm has been tailored to handle the enhanced game mechanics, allowing the AI to plan moves that can push multiple marbles and execute offensive strategies effectively. The depth of the Minimax tree varies based on the complexity of the game state, with deeper levels representing more advanced future game states.
+
+**Enhanced Heuristic Function:**
+- **Positional Value**: The AI evaluates positions not just based on the number of opponent marbles that can be pushed out but also on the strategic positioning of its own marbles. This includes forming configurations that prevent the opponent from making significant moves.
+- **Marble Advantage**: Prioritizes moves that maximize the differential in the number of marbles between the player and the opponent, pushing towards a state where the opponent has fewer options for movement.
+
+**Adaptive Depth Levels:**
+- The AI uses adaptive depth levels in the Minimax algorithm to optimize performance and response time. During critical stages of the game or when fewer marbles are on the board, the AI explores deeper into the game tree.
+
+**Pruning Techniques:**
+- Alpha-beta pruning is integrated into the algorithm to reduce the number of nodes evaluated, enhancing the decision-making speed without sacrificing accuracy. This technique skips evaluating branches in the Minimax tree that won't affect the final decision.
 
 ---
 
