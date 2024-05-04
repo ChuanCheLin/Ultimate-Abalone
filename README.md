@@ -138,6 +138,26 @@ This project consists of several Python files, each serving a specific function 
 
 ---
 
+### Simulation Results and Analysis
+
+In testing different AI strategies for Ultimate Abalone, we conducted simulations to evaluate the effectiveness of the Minimax algorithm with varying levels of complexity against a random move player, and in matches between enhanced AI versions. Here are the key findings:
+
+#### Simple Minimax vs. Random Player
+
+- **Result**: The Simple Minimax AI, which focuses solely on pushing off the opponent's marbles, consistently outperforms the random move player.
+- **Analysis**: This outcome underscores the effectiveness of even a basic heuristic that prioritizes direct objectives (like removing opponent marbles) over random gameplay. The Simple Minimax's strategy to push marbles off the board provides it with a clear tactical advantage, making it more likely to win by achieving the game's primary goal more efficiently.
+
+#### Enhanced Minimax (Positional Awareness) vs. Simple Minimax
+
+- **Result**: When positional strength is integrated into the Minimax algorithm, the Enhanced Minimax AI always beats the Simple Minimax.
+- **Analysis**:
+  - **Strategic Depth**: The Enhanced Minimax AI not only considers the immediate benefit of pushing marbles off the board but also evaluates the positional strength of each move. This includes setting up marbles in positions that are strategically advantageous for future turns and creating formations that are difficult for the opponent to break.
+  - **Long-term Planning**: By considering the position, the Enhanced Minimax can execute moves that may not immediately push off an opponent's marble but set up a more favorable board state for subsequent turns. This approach reduces the opponent's options for effective responses, gradually leading to a win.
+  - **Defensive Tactics**: Positional awareness also allows the AI to better defend against potential threats, positioning its marbles to block or counteract the opponent's strategies.
+
+
+
+---
 
 ### Code Analysis
 
